@@ -1,0 +1,27 @@
+<ion-view>
+  <ion-nav-title>
+    משימות שבועיות
+  </ion-nav-title>
+  <ion-nav-buttons side="left">
+    <button class="button">
+      {{weekly.user.points}}
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+    <ion-list>
+      <ion-item class="first-item">
+        <span class="ale-weekly"></span>
+        <div>
+          משימות יום יומיות עם שפך הנילוס אל גדות אלכסנדריה לא ממש רואים את הסוף
+        </div>
+      </ion-item>
+      <ion-item class="item" ng-repeat="task in weekly.tasks" type="item-text-wrap" ng-click="weekly.done(task.id)">
+      <span ng-class="{ 'ale-checkedbox': task.done, 'ale-checkbox': !task.done }"></span>
+      <div>
+        <span ng-class="{ taskDone: task.done }">{{task.title}}</span><br/>
+        <span>({{task.points}} נקודות)</span>
+      </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

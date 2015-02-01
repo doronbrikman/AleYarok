@@ -1,0 +1,44 @@
+// Ale Yarok Icons
+// --------------------------
+
+.aleicons,
+.#{$aleicons-prefix}alle:before,
+.#{$aleicons-prefix}checkbox:before,
+.#{$aleicons-prefix}articls:before,
+.#{$aleicons-prefix}joint:before,
+.#{$aleicons-prefix}daily:before,
+.#{$aleicons-prefix}once:before,
+.#{$aleicons-prefix}share:before,
+.#{$aleicons-prefix}checkedbox:before,
+.#{$aleicons-prefix}weekly:before
+{
+  @extend .ale;
+}
+.#{$aleicons-prefix}alle:before { content: $aleicons-var-alle; }
+.#{$aleicons-prefix}checkbox:before { content: $aleicons-var-checkbox; }
+.#{$aleicons-prefix}articls:before { content: $aleicons-var-articls; }
+.#{$aleicons-prefix}joint:before { content: $aleicons-var-joint; }
+.#{$aleicons-prefix}daily:before { content: $aleicons-var-daily; }
+.#{$aleicons-prefix}once:before { content: $aleicons-var-once; }
+.#{$aleicons-prefix}share:before { content: $aleicons-var-share; }
+.#{$aleicons-prefix}checkedbox:before { content: $aleicons-var-checkbox; }
+.#{$aleicons-prefix}weekly:before { content: $aleicons-var-weekly; }
+
+.#{$aleicons-prefix}checkedbox:after {
+  font-family: $aleicons-font-family;
+  top: 21px;
+  display: block;
+  position: absolute;
+  color: $balanced;
+  white-space: normal;
+  speak: none;
+  content: $aleicons-var-v_icon;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-rendering: auto;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

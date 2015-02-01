@@ -1,0 +1,35 @@
+// Ale Yarok Font Path
+// --------------------------
+
+@font-face {
+  font-family: $aleicons-font-family;
+  src:url("#{$aleicons-font-path}/aleicons.eot?-44hlly");
+  src:url("#{$aleicons-font-path}/aleicons.eot?#iefix-44hlly'") format("embedded-opentype"),
+  url("#{$aleicons-font-path}/aleicons.ttf?-44hlly") format("truetype"),
+  url("#{$aleicons-font-path}/aleicons.woff?-44hlly") format("woff"),
+  url("#{$aleicons-font-path}/aleicons.svg?-44hlly#aleicons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.ale {
+  display: inline-block;
+  font-family: $aleicons-font-family;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-rendering: auto;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ale:before,
+.ale:after {
+//  display: block;
+//  position: absolute;
+//  white-space: normal;
+//  speak: none;
+}
