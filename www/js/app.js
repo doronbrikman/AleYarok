@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, DailyTasks, $timeout) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,6 +18,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    document.addEventListener('resume', function () {
+      DailyTasks.init(function() {
+        DailyTasks.all();
+      });
+    });
   });
 })
 
@@ -61,15 +67,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         }
       }
     })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html'//,
-          //controller: 'ChatDetailCtrl'
-        }
-      }
-    })
 
   .state('tab.oneTime', {
       url: '/oneTime',
@@ -80,27 +77,63 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
         }
       }
     })
-    .state('tab.friend-detail', {
-      url: '/friend/:friendId',
-      views: {
-        'tab-friends': {
-          //templateUrl: 'templates/friend-detail.html',
-          //controller: 'FriendDetailCtrl'
-        }
-      }
-    })
 
   .state('tab.articles', {
-    url: '/articles',
-    views: {
-      'tab-articles': {
-        templateUrl: 'templates/tab-articles.html',
-        controller: 'ArticleCtrl as article'
+        url: '/articles',
+        views: {
+          'tab-articles': {
+            templateUrl: 'templates/tab-articles.html',
+            controller: 'ArticleCtrl as article'
+          }
+        }
+      })
+
+    .state('tab.articles-rak', {
+      url: '/articles/rak',
+      views: {
+        'tab-articles': {
+          templateUrl: 'templates/rak-ale-yarok.html'
+        }
       }
-    }
+      })
+
+      .state('tab.articles-reasons', {
+        url: '/articles/reasons',
+        views: {
+          'tab-articles': {
+            templateUrl: 'templates/reasons.html'
+          }
+        }
+      })
+
+      .state('tab.articles-objections', {
+        url: '/articles/objections',
+        views: {
+          'tab-articles': {
+            templateUrl: 'templates/objections.html'
+          }
+        }
+      })
+
+      .state('tab.articles-objections-link', {
+        url: '/articles/objections/http://news.walla.co.il/item/2803743',
+        views: {
+          'tab-articles': {
+            templateUrl: 'http://news.walla.co.il/item/2803743'
+          }
+        }
+      })
+
+      .state('tab.articles-msg', {
+        url: '/articles/msg',
+        views: {
+          'tab-articles': {
+            templateUrl: 'templates/Messages.html'
+          }
+        }
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/daily');
+  $urlRouterProvider.otherwise('/tab/articles');
 
 });

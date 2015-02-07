@@ -45,10 +45,13 @@ body {
 
   > span {
     font-size: 32px;
+    vertical-align: top;
   }
 
   div {
     display: inline-block;
+    width: 90%;
+    vertical-align: top;
   }
 }
 

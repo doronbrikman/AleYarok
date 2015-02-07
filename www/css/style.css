@@ -7067,7 +7067,7 @@ a.button {
 
 .ale-checkedbox:after {
   font-family: "aleicons";
-  top: 21px;
+  top: 17px;
   display: block;
   position: absolute;
   color: #73961B;
@@ -7092,9 +7092,12 @@ body {
   text-align: right;
   direction: rtl; }
   .item > span {
-    font-size: 32px; }
+    font-size: 32px;
+    vertical-align: top; }
   .item div {
-    display: inline-block; }
+    display: inline-block;
+    width: 90%;
+    vertical-align: top; }
 
 .taskTitle {
   font-size: 14px; }

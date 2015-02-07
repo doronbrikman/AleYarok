@@ -18,8 +18,8 @@
       <ion-item class="item" ng-repeat="task in onceTime.tasks" type="item-text-wrap" ng-click="onceTime.done(task.id)">
         <span ng-class="{ 'ale-checkedbox': task.done, 'ale-checkbox': !task.done }"></span>
         <div>
-          <span ng-class="{ taskDone: task.done }">{{task.title}}</span><br/>
-          <span>({{task.points}} נקודות)</span>
+          <span style="white-space: pre-wrap" ng-class="{ taskDone: task.done }">{{task.title}}</span><br/>
+          <span>({{task.points}} קולות)</span>
         </div>
       </ion-item>
     </ion-list>

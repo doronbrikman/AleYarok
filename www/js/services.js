@@ -36,6 +36,12 @@ angular.module('starter.services', [])
       }
     }])
 
+    .filter('externalLinks', function() {
+      return function(text) {
+        return String(text).replace(/href=/gm, "class=\"ex-link\" href=");
+      }
+    })
+
     .factory('UserService', ['$localstorage', function($localstorage) {
 
         function User() {
@@ -64,38 +70,53 @@ angular.module('starter.services', [])
 
   .factory('OneTimeTasks', ['$localstorage', function($localstorage) {
 
-      var tasks = $localstorage.getObject('once');
+      var tasks = $localstorage.getObject('once1');
 
       if (!tasks) {
 
         tasks = [{
           id: 0,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
-          points: 2,
+          title: 'קראתי את המאמרים באפליקציה',
+          points: 10,
           done: false
         }, {
           id: 1,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
-          points: 2,
+          title: 'הורדתי את הרינגטון',
+          points: 15,
           done: false
         }, {
           id: 2,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
-          points: 2,
+          title: 'שכנעתי את כל חבריי לעשות תחרות מי ישיג יותר נקודות באפליקציה עד הבחירות',
+          points: 10,
           done: false
         }, {
           id: 3,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
-          points: 2,
+          title: 'תליתי פלריג במרפסת',
+          points: 7,
           done: false
         }, {
           id: 4,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
-          points: 2,
+          title: 'ארגנתי מפגש/חוג בית',
+          points: 8,
+          done: false
+        }, {
+          id: 5,
+          title: 'התנדבתי ביום הבחירות',
+          points: 20,
+          done: false
+        }, {
+          id: 6,
+          title: 'שיניתי את תמונת הפרופיל שלי בפייסבוק',
+          points: 10,
+          done: false
+        }, {
+          id: 7,
+          title: 'דירגתי את האפליקציה ב-5 כוכבים',
+          points: 3,
           done: false
         }];
 
-        $localstorage.setObject('once', tasks);
+        $localstorage.setObject('once1', tasks);
       }
 
       return {
@@ -106,16 +127,16 @@ angular.module('starter.services', [])
           return tasks[taskId];
         },
         changeState: function(taskId) {
-          tasks[taskId].done = !tasks[taskId].done;
-          $localstorage.setObject('once', tasks);
+          tasks[taskId].done = true; // !tasks[taskId].done;
+          $localstorage.setObject('once1', tasks);
         }
       }
     }])
 
-.factory('WeeklyTasks', ['$localstorage', function($localstorage) {
+.factory('WeeklyTasks', ['$localstorage', '$rootScope', function($localstorage, $rootScope) {
 
       // Get the state of the daily tasks
-      var tasksObj = $localstorage.getObject('weekly');
+      var tasksObj = $localstorage.getObject('weekly1');
 
       // We want to check if it's a new ׳week, for init the daily tasks
       if (!tasksObj || tasksObj.timestamp != moment().format('w')) {
@@ -125,105 +146,257 @@ angular.module('starter.services', [])
 
         tasksObj.tasks = [{
           id: 0,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
+          title: 'העליתי תמונה לאינסטגרם',
           points: 2,
           done: false
         }, {
           id: 1,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
-          points: 2,
+          title: 'דיברתי עם ההורים',
+          points: 4,
           done: false
         }, {
           id: 2,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
-          points: 2,
+          title: 'דיברתי עם הבוס',
+          points: 5,
           done: false
         }, {
           id: 3,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
-          points: 2,
+          title: 'הדבקתי מדבקות',
+          points: 3,
           done: false
         }, {
           id: 4,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
-          points: 2,
+          title: 'יצאתי לשטח כפעיל עלה ירוק',
+          points: 5,
+          done: false
+        }, {
+          id: 5,
+          title: 'לבשתי את חולצת המפלגה והסתובבתי בגאווה בעיר',
+          points: 5,
+          done: false
+        }, {
+          id: 6,
+          title: 'חילקתי 100 פלאיירים',
+          points: 5,
+          done: false
+        }, {
+          id: 7,
+          title: 'עדכנתי את האפליקציה',
+          points: 5,
           done: false
         }];
 
         tasksObj.timestamp = moment().format('w');
 
-        $localstorage.setObject('weekly', tasksObj);
+        $localstorage.setObject('weekly1', tasksObj);
       }
 
       return {
-        all: function() {
-          return tasksObj.tasks;
-        },
+        all: tasksObj,
         get: function(taskId) {
           return tasksObj.tasks[taskId];
         },
         changeState: function(taskId) {
-          tasksObj.tasks[taskId].done = !tasksObj.tasks[taskId].done;
-          $localstorage.setObject('weekly', tasksObj);
+          tasksObj.tasks[taskId].done = true; // !tasksObj.tasks[taskId].done;
+          $localstorage.setObject('weekly1', tasksObj);
+        },
+        init: function() {
+
+          $rootScope.$apply(function() {
+            if (tasksObj.timestamp != moment().format('w')) {
+
+              tasksObj.tasks = [{
+                id: 0,
+                title: 'העליתי תמונה לאינסטגרם',
+                points: 2,
+                done: false
+              }, {
+                id: 1,
+                title: 'דיברתי עם ההורים',
+                points: 4,
+                done: false
+              }, {
+                id: 2,
+                title: 'דיברתי עם הבוס',
+                points: 5,
+                done: false
+              }, {
+                id: 3,
+                title: 'הדבקתי מדבקות',
+                points: 3,
+                done: false
+              }, {
+                id: 4,
+                title: 'יצאתי לשטח כפעיל עלה ירוק',
+                points: 5,
+                done: false
+              }, {
+                id: 5,
+                title: 'לבשתי את חולצת המפלגה והסתובבתי בגאווה בעיר',
+                points: 5,
+                done: false
+              }, {
+                id: 6,
+                title: 'חילקתי 100 פלאיירים',
+                points: 5,
+                done: false
+              }, {
+                id: 7,
+                title: 'עדכנתי את האפליקציה',
+                points: 5,
+                done: false
+              }];
+
+              tasksObj.timestamp = moment().format('w');
+
+              $localstorage.setObject('weekly1', tasksObj);
+            }
+          });
+
         }
       }
 }])
 
-    .factory('DailyTasks', ['$localstorage', function($localstorage) {
+    .factory('DailyTasks', ['$localstorage', '$rootScope', function($localstorage, $rootScope) {
 
-      // Get the state of the daily tasks
-      var tasksObj = $localstorage.getObject('daily');
+        // Get the state of the daily tasks
+        var tasksObj = $localstorage.getObject('daily1');
 
-      // We want to check if it's a new day, for init the daily tasks
-      if (!tasksObj || tasksObj.timestamp != moment().format('DD/MM/YY')) {
+        // We want to check if it's a new day, for init the daily tasks
+        if (!tasksObj || tasksObj.timestamp != moment().format('DD/MM/YY')) {
 
-        // Create new tasks object to save locally
-        tasksObj = {};
+          // Create new tasks object to save locally
+          tasksObj = {};
 
-        tasksObj.tasks = [{
-          id: 0,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
-          points: 2,
-          done: false
-        }, {
-          id: 1,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
-          points: 2,
-          done: false
-        }, {
-          id: 2,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
-          points: 2,
-          done: false
-        }, {
-          id: 3,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
-          points: 2,
-          done: false
-        }, {
-          id: 4,
-          title: 'לשתף כרזה/סטטוס בפייסבוק',
-          points: 2,
-          done: false
-        }];
+          tasksObj.tasks = [{
+            id: 0,
+            title: 'שיתפתי פוסט בפייסבוק',
+            points: 1,
+            done: false
+          }, {
+            id: 1,
+            title: 'שיתפתי כרזה/וידאו בווטסאפ',
+            points: 1,
+            done: false
+          }, {
+            id: 2,
+            title: 'התכתבתי עם אנשים בפייסבוק',
+            points: 2,
+            done: false
+          }, {
+            id: 3,
+            title: 'דיברתי בטלפון עם שני חברים',
+            points: 3,
+            done: false
+          }, {
+            id: 4,
+            title: 'דיברתי עם בן/בת זוגי',
+            points: 4,
+            done: false
+          },{
+            id: 5,
+            title: 'דיברתי עם חבריי לעבודה',
+            points: 4,
+            done: false
+          }, {
+            id: 6,
+            title: 'דיברתי עם חבריי ללימודים',
+            points: 4,
+            done: false
+          }, {
+            id: 7,
+            title: 'דיברתי עם לקוחות',
+            points: 5,
+            done: false
+          }, {
+            id: 8,
+            title: 'דיברתי עם עובדיי',
+            points: 5,
+            done: false
+          }, {
+            id: 9,
+            title: 'נפגשתי עם חברים',
+            points: 5,
+            done: false
+          }];
 
-        $localstorage.setObject('daily', { tasks: tasksObj.tasks, timestamp: moment().format('DD/MM/YY') });
-      }
+          tasksObj.timestamp = moment().format('DD/MM/YY');
 
-      return {
-        all: function() {
-          return tasksObj.tasks;
-        },
-        get: function(taskId) {
-          return tasksObj.tasks[taskId];
-        },
-        changeState: function(taskId) {
-          tasksObj.tasks[taskId].done = !tasksObj.tasks[taskId].done;
-          $localstorage.setObject('daily', tasksObj);
-        },
-        moment: moment().format('DD/MM/YY'),
-        do: function() {
-          $localstorage.remove('daily');
+          $localstorage.setObject('daily1', tasksObj);
         }
-      }
+
+        return {
+          all: tasksObj,
+          get: function(taskId) {
+            return tasksObj.tasks[taskId];
+          },
+          changeState: function(taskId) {
+            tasksObj.tasks[taskId].done = true; //!tasksObj.tasks[taskId].done;
+            $localstorage.setObject('daily1', tasksObj);
+          },
+          init: function() {
+
+            $rootScope.$apply(function() {
+              if (tasksObj.timestamp != moment().format('DD/MM/YY')) {
+
+                tasksObj.tasks = [{
+                  id: 0,
+                  title: 'שיתפתי פוסט בפייסבוק',
+                  points: 1,
+                  done: false
+                }, {
+                  id: 1,
+                  title: 'שיתפתי כרזה/וידאו בווטסאפ',
+                  points: 1,
+                  done: false
+                }, {
+                  id: 2,
+                  title: 'התכתבתי עם אנשים בפייסבוק',
+                  points: 2,
+                  done: false
+                }, {
+                  id: 3,
+                  title: 'דיברתי בטלפון עם שני חברים',
+                  points: 3,
+                  done: false
+                }, {
+                  id: 4,
+                  title: 'דיברתי עם בן/בת זוגי',
+                  points: 4,
+                  done: false
+                },{
+                  id: 5,
+                  title: 'דיברתי עם חבריי לעבודה',
+                  points: 4,
+                  done: false
+                }, {
+                  id: 6,
+                  title: 'דיברתי עם חבריי ללימודים',
+                  points: 4,
+                  done: false
+                }, {
+                  id: 7,
+                  title: 'דיברתי עם לקוחות',
+                  points: 5,
+                  done: false
+                }, {
+                  id: 8,
+                  title: 'דיברתי עם עובדיי',
+                  points: 5,
+                  done: false
+                }, {
+                  id: 9,
+                  title: 'נפגשתי עם חברים',
+                  points: 5,
+                  done: false
+                }];
+
+                tasksObj.timestamp = moment().format('DD/MM/YY');
+
+                $localstorage.setObject('daily1', tasksObj);
+              }
+            });
+
+          }
+        }
     }]);
