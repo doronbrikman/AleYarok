@@ -117,14 +117,24 @@ angular.module('starter.controllers', [])
         }
     }])
 
-    .controller('ArticleCtrl', ['$state', '$cordovaToast', '$localstorage', 'ionPlatform', function($state, $cordovaToast, $localstorage, ionPlatform) {
+    .controller('ArticleCtrl', ['$state', '$localstorage', '$ionicPopup', function($state, $localstorage, $ionicPopup) {
 
-        ionPlatform.ready.then(function (device) {
-            if (!$localstorage.get('msg')) {
-                $cordovaToast.showShortCenter('הודעה שתוצג בפעם הראשונה');
+        if (!$localstorage.get('msg')) {
+            showAlert();
+        }
+
+        showAlert();
+
+        // An alert dialog
+        function showAlert() {
+            var alertPopup = $ionicPopup.alert({
+                title: '!שלום לפעילי עלה ירוק',
+                templateUrl: 'templates/start-alert.html'
+            });
+            alertPopup.then(function (res) {
                 $localstorage.set('msg', true);
-            }
-        });
+            });
+        }
 
         this.goto = function(article) {
             $state.go('tab.articles-' + article);
