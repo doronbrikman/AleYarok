@@ -117,30 +117,50 @@ angular.module('starter.controllers', [])
         }
     }])
 
-    .controller('ArticleCtrl', ['$state', '$localstorage', '$ionicPopup', function($state, $localstorage, $ionicPopup) {
+    .controller('ArticleCtrl', ['$state', '$localstorage', '$ionicPopup', 'ionPlatform', '$cordovaLocalNotification',
+        function($state, $localstorage, $ionicPopup, ionPlatform, $cordovaLocalNotification) {
 
-        if (!$localstorage.get('msg')) {
-            showAlert();
-        }
+            // call to register automatically upon device ready
+            ionPlatform.ready.then(function (device) {
+                if (ionic.Platform.isIOS()) {
+                    window.plugin.notification.local.promptForPermission();
+                }
 
-        showAlert();
-
-        // An alert dialog
-        function showAlert() {
-            var alertPopup = $ionicPopup.alert({
-                title: '!שלום לפעילי עלה ירוק',
-                templateUrl: 'templates/start-alert.html'
+                if (!$localstorage.get('notif')) {
+                    addNotification();
+                }
             });
-            alertPopup.then(function (res) {
-                $localstorage.set('msg', true);
-            });
-        }
 
-        this.goto = function(article) {
-            $state.go('tab.articles-' + article);
-        };
+            function addNotification() {
+                $cordovaLocalNotification.add({
+                    id: '123',
+                    date: new Date(2015, 2, 17, 10, 00, 0),
+                    message: 'יום הבוחר הגיע, לכו להצביע עלה ירוק'
+                }).then(function () {
+                    $localstorage.set('notif', true);
+                });
+            }
 
-        this.href = function(link) {
-            window.open(link, "_blank", "location=yes");
-        };
+            if (!$localstorage.get('msg')) {
+                showAlert();
+            }
+
+            // An alert dialog
+            function showAlert() {
+                var alertPopup = $ionicPopup.alert({
+                    title: '!שלום לפעילי עלה ירוק',
+                    templateUrl: 'templates/start-alert.html'
+                });
+                alertPopup.then(function (res) {
+                    $localstorage.set('msg', true);
+                });
+            }
+
+            this.goto = function(article) {
+                $state.go('tab.articles-' + article);
+            };
+
+            this.href = function(link) {
+                window.open(link, "_blank", "location=yes");
+            };
     }]);

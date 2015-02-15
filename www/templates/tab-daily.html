@@ -1,27 +1,32 @@
 <ion-view>
-  <ion-nav-title>
-    משימות יומיות
-  </ion-nav-title>
-  <ion-nav-buttons side="left">
-    <button class="button">
-      {{daily.user.points}}
-    </button>
-  </ion-nav-buttons>
-  <ion-content>
-    <ion-list>
-      <ion-item class="first-item">
-        <span class="ale-daily"></span>
-        <div>
-            דבר גדול הוא צירוף של הרבה דברים קטנים. אם כל יום, הרבה אנשים יעשו דברים קטנים - ביחד זה מצטבר לדבר גדול.
-        </div>
-      </ion-item>
-      <ion-item class="item" ng-repeat="task in daily.tasks.tasks" type="item-text-wrap" ng-click="daily.done(task.id)">
-        <span ng-class="{ 'ale-checkedbox': task.done, 'ale-checkbox': !task.done }"></span>
-        <div>
-          <span style="white-space: pre-wrap" ng-class="{ taskDone: task.done }">{{task.title}}</span><br/>
-          <span>({{task.points}} קולות)</span>
-        </div>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+    <ion-nav-title>
+        משימות יומיות
+    </ion-nav-title>
+    <ion-nav-buttons side="left">
+        <button class="button">
+            {{daily.user.points}}
+        </button>
+    </ion-nav-buttons>
+    <ion-content>
+        <ion-list>
+            <ion-item class="first-item">
+                <span class="ale-daily"></span>
+
+                <div>
+                    דבר גדול הוא צירוף של הרבה דברים קטנים. אם כל יום, הרבה אנשים יעשו דברים קטנים - ביחד זה מצטבר לדבר
+                    גדול.
+                </div>
+            </ion-item>
+            <ion-item class="item" ng-repeat="task in daily.tasks.tasks" type="item-text-wrap"
+                      ng-click="daily.done(task.id)">
+                <span ng-class="{ 'ale-checkedbox': task.done, 'ale-checkbox': !task.done }"></span>
+
+                <div>
+                    <span style="white-space: pre-wrap" ng-class="{ taskDone: task.done }">{{task.title}}</span><br/>
+                    <span ng-if="task.points > 1">({{task.points}} קולות)</span>
+                    <span ng-if="task.points === 1">(קול אחד)</span>
+                </div>
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </ion-view>
